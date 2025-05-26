@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import Image from 'next/image';
 import { useEffect } from 'react';
 
@@ -11,8 +12,11 @@ export default function Fans() {
       script.setAttribute('async', '');
       script.setAttribute('id', 'instagram-embed-script');
       document.body.appendChild(script);
-    } else if (typeof window !== 'undefined' && (window as any).instgrm) {
-      (window as any).instgrm.Embeds.process();
+    } else if (
+      typeof window !== 'undefined' &&
+      (window as unknown as { instgrm?: { Embeds: { process: () => void } } }).instgrm
+    ) {
+      (window as unknown as { instgrm?: { Embeds: { process: () => void } } }).instgrm?.Embeds.process();
     }
   }, []);
 
